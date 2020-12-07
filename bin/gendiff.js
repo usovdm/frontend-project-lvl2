@@ -1,6 +1,11 @@
 #!/usr/bin/env node
-const { program } = require('commander');
+import { createRequire } from 'module';
+import commander from 'commander';
+
+const require = createRequire(import.meta.url);
 const { version } = require('../package.json');
+
+const { program } = commander;
 
 program
   .version(version)
