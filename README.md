@@ -1,5 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/usovdm/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/usovdm/frontend-project-lvl2/actions)
+[![Linter](https://github.com/usovdm/frontend-project-lvl2/workflows/Linter/badge.svg)](https://github.com/usovdm/frontend-project-lvl2/actions?query=workflow%3ALinter)
 
 ### Examples in Asciinemas
 https://asciinema.org/a/378163

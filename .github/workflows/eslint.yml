@@ -1,0 +1,20 @@
+name: Linter
+
+on: push
+
+jobs:
+  eslint:
+    name: Lint code base
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: use node 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: install project
+        run: make install
+      - name: Check code
+        run: make lint
