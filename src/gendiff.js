@@ -17,7 +17,7 @@ const getDiffBetweenJsonFiles = (filepath1, filepath2) => {
 
   const diffObject = sortedKeys.map((key) => ({
     key,
-    changed: firstJson[key] !== secondJson[key],
+    isDifferent: firstJson[key] !== secondJson[key],
     left: firstJson[key],
     right: secondJson[key],
   }));
@@ -30,9 +30,9 @@ const getDiffString = (diffObject) => {
   result.push('{');
   diffObject
     .forEach(({
-      key, changed, left, right,
+      key, isDifferent, left, right,
     }) => {
-      if (changed === false) {
+      if (isDifferent === false) {
         result.push(`    ${key}: ${left}`);
         return;
       }
