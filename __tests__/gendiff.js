@@ -15,5 +15,6 @@ describe('gendiff', () => {
 });
 
 /*
-extra ideas of cases
+# extra ideas of cases
+- abstract file path with getcwd()
 */
