@@ -5,7 +5,7 @@
   "main": "src/gendiff.js",
   "type": "module",
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest -i --watch"
   },
   "repository": {
     "type": "git",

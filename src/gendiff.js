@@ -1,35 +1,7 @@
 import fs from 'fs';
 import _ from 'lodash';
 
-const getDiffBetweenJsonObjects = (firstJson, secondJson) => {
-  const keys = _.concat(
-    Object.getOwnPropertyNames(firstJson),
-    Object.getOwnPropertyNames(secondJson),
-  );
-
-  const sortedKeys = _.sortBy(_.uniq(keys));
-
-  const diffObject = sortedKeys.map((key) => ({
-    key,
-    isDifferent: firstJson[key] !== secondJson[key],
-    left: firstJson[key],
-    right: secondJson[key],
-  }));
-
-  return diffObject;
-};
-
-const getDiffBetweenJsonFiles = (filepath1, filepath2) => {
-  const firstFileContent = fs.readFileSync(filepath1);
-  const secondFileContent = fs.readFileSync(filepath2);
-
-  const firstJson = JSON.parse(firstFileContent);
-  const secondJson = JSON.parse(secondFileContent);
-
-  return getDiffBetweenJsonObjects(firstJson, secondJson);
-};
-
-const getDiffString = (diffObject) => {
+const convertDiffToString = (diffObject) => {
   const result = [];
   result.push('{');
   diffObject
@@ -52,8 +24,41 @@ const getDiffString = (diffObject) => {
   return result.join('\n');
 };
 
-const gendiff = (filepath1, filepath2) => getDiffString(
+const getDiffBetweenJsonObjects = (firstJson, secondJson) => {
+  const keys = _.concat(
+    Object.getOwnPropertyNames(firstJson),
+    Object.getOwnPropertyNames(secondJson),
+  );
+
+  const sortedKeys = _.sortBy(_.uniq(keys));
+
+  const diffObject = sortedKeys.map((key) => ({
+    key,
+    isDifferent: firstJson[key] !== secondJson[key],
+    left: firstJson[key],
+    right: secondJson[key],
+  }));
+
+  diffObject.toString = () => convertDiffToString(diffObject);
+
+  return diffObject;
+};
+
+const getDiffBetweenJsonFiles = (filepath1, filepath2) => {
+  const firstFileContent = fs.readFileSync(filepath1);
+  const secondFileContent = fs.readFileSync(filepath2);
+
+  const firstJson = JSON.parse(firstFileContent);
+  const secondJson = JSON.parse(secondFileContent);
+
+  return getDiffBetweenJsonObjects(firstJson, secondJson);
+};
+
+const gendiff = (filepath1, filepath2) => convertDiffToString(
   getDiffBetweenJsonFiles(filepath1, filepath2),
 );
 
 export default gendiff;
+export {
+  getDiffBetweenJsonObjects,
+};
