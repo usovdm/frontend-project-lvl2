@@ -1,0 +1,22 @@
+name: Tests
+
+on: 
+  - push
+  - pull_request
+
+jobs:
+  autoTests:
+    name: Run auto tests and make coverage
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: use node 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: install project
+        run: make install
+      - name: Run auto tests
+        run: npm run test:coverage
