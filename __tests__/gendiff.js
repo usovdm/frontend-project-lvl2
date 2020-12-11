@@ -29,13 +29,17 @@ describe('gendiff', () => {
   - verbose: true
 }`);
     });
-    it.skip('fails if the first file has the wrong path', () => {
+    it('fails if the first file has the wrong path', () => {
       const filepath1 = './sample/file1.json';
       const filepath2 = './sample/non-exist';
 
-      expect(genDiff(filepath1, filepath2)).toThrow();
+      expect(() => genDiff(filepath1, filepath2)).toThrow();
     });
-    it.skip('fails if the second file has the wrong path', () => { });
+    it('fails if the second file has the wrong path', () => {
+      const filepath1 = './sample/non-exist';
+      const filepath2 = './sample/file2.json';
+      expect(() => genDiff(filepath1, filepath2)).toThrow();
+    });
   });
   describe('function', () => {
     it('returns unchanged property', () => {
