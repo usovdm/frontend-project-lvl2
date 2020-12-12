@@ -24,7 +24,7 @@ jobs:
       - name: Run auto tests
         uses: paambaati/codeclimate-action@v2.7.4
         env:
-          CC_TEST_REPORTER_ID: 395a9a32f38a9c530dc7649f650cceadccf8b1aecf7a04464ff14c34cb9ea406
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: npm run test:coverage
           debug: true
