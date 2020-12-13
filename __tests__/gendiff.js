@@ -1,5 +1,8 @@
 /* eslint-disable jest/no-disabled-tests */
-import genDiff, { getDiffBetweenJsonObjects } from '../src/gendiff';
+import { fileURLToPath } from 'url';
+import genDiff, { getDiffBetweenJsonObjects, getExt } from '../src/gendiff';
+
+const getAbsolutePath = (filepath) => fileURLToPath(new URL(filepath, import.meta.url));
 
 describe('gendiff', () => {
   describe('files', () => {
@@ -17,8 +20,8 @@ describe('gendiff', () => {
 }`);
     });
     it('reads by absolute path', () => {
-      const filepath1 = new URL('../sample/file2.json', import.meta.url);
-      const filepath2 = new URL('../sample/file1.json', import.meta.url);
+      const filepath1 = getAbsolutePath('../sample/file2.json');
+      const filepath2 = getAbsolutePath('../sample/file1.json');
 
       expect(genDiff(filepath1, filepath2)).toBe(`{
   + follow: false
@@ -39,6 +42,19 @@ describe('gendiff', () => {
       const filepath1 = './sample/non-exist';
       const filepath2 = './sample/file2.json';
       expect(() => genDiff(filepath1, filepath2)).toThrow();
+    });
+    it('reads and compares yaml files', () => {
+      const filepath1 = getAbsolutePath('../sample/file2.json');
+      const filepath2 = getAbsolutePath('../sample/file1.json');
+
+      expect(genDiff(filepath1, filepath2)).toBe(`{
+  + follow: false
+    host: hexlet.io
+  + proxy: 123.234.53.22
+  - timeout: 20
+  + timeout: 50
+  - verbose: true
+}`);
     });
   });
   describe('function', () => {
@@ -103,6 +119,21 @@ describe('gendiff', () => {
   + key: false
 }`,
       );
+    });
+  });
+
+  describe('sub function', () => {
+    it('getExt returns yaml extension', () => {
+      const filepath = './folder/file.yaml';
+      expect(getExt(filepath)).toBe('.yaml');
+    });
+    it('getExt returns json extension', () => {
+      const filepath = './folder/file.json';
+      expect(getExt(filepath)).toBe('.json');
+    });
+    it('getExt returns json as default', () => {
+      const filepath = './folder/file';
+      expect(getExt(filepath)).toBe('.json');
     });
   });
 });
