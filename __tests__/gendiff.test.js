@@ -7,8 +7,8 @@ const getAbsolutePath = (filepath) => fileURLToPath(new URL(filepath, import.met
 describe('gendiff', () => {
   describe('files', () => {
     it('reads both files', () => {
-      const filepath1 = './sample/file1.json';
-      const filepath2 = './sample/file2.json';
+      const filepath1 = './__fixtures__/file1.json';
+      const filepath2 = './__fixtures__/file2.json';
 
       expect(genDiff(filepath1, filepath2)).toBe(`{
   - follow: false
@@ -20,8 +20,8 @@ describe('gendiff', () => {
 }`);
     });
     it('reads by absolute path', () => {
-      const filepath1 = getAbsolutePath('../sample/file2.json');
-      const filepath2 = getAbsolutePath('../sample/file1.json');
+      const filepath1 = getAbsolutePath('../__fixtures__/file2.json');
+      const filepath2 = getAbsolutePath('../__fixtures__/file1.json');
 
       expect(genDiff(filepath1, filepath2)).toBe(`{
   + follow: false
@@ -33,19 +33,19 @@ describe('gendiff', () => {
 }`);
     });
     it('fails if the first file has the wrong path', () => {
-      const filepath1 = './sample/file1.json';
-      const filepath2 = './sample/non-exist';
+      const filepath1 = './__fixtures__/file1.json';
+      const filepath2 = './__fixtures__/non-exist';
 
       expect(() => genDiff(filepath1, filepath2)).toThrow();
     });
     it('fails if the second file has the wrong path', () => {
-      const filepath1 = './sample/non-exist';
-      const filepath2 = './sample/file2.json';
+      const filepath1 = './__fixtures__/non-exist';
+      const filepath2 = './__fixtures__/file2.json';
       expect(() => genDiff(filepath1, filepath2)).toThrow();
     });
     it('reads and compares yaml files', () => {
-      const filepath1 = getAbsolutePath('../sample/file2.json');
-      const filepath2 = getAbsolutePath('../sample/file1.json');
+      const filepath1 = getAbsolutePath('../__fixtures__/file2.json');
+      const filepath2 = getAbsolutePath('../__fixtures__/file1.json');
 
       expect(genDiff(filepath1, filepath2)).toBe(`{
   + follow: false
