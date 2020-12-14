@@ -56,6 +56,19 @@ describe('gendiff', () => {
   - verbose: true
 }`);
     });
+    it('reads files without extension as json files', () => {
+      const filepath1 = './__fixtures__/file1';
+      const filepath2 = './__fixtures__/file2';
+
+      expect(genDiff(filepath1, filepath2)).toBe(`{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`);
+    });
   });
   describe('function', () => {
     it('returns unchanged property', () => {
