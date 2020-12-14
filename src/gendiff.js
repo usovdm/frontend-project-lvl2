@@ -1,7 +1,5 @@
-import fs from 'fs';
 import _ from 'lodash';
-import path from 'path';
-import yaml from 'js-yaml';
+import Parser from './Parser';
 
 const convertDiffToString = (diffObject) => {
   const result = [];
@@ -26,11 +24,6 @@ const convertDiffToString = (diffObject) => {
   return result.join('\n');
 };
 
-export const getExt = (filepath) => {
-  const extension = path.extname(filepath);
-  return extension || '.json';
-};
-
 const getDiffBetweenJsonObjects = (firstJson, secondJson) => {
   const keys = _.concat(
     Object.getOwnPropertyNames(firstJson),
@@ -52,29 +45,8 @@ const getDiffBetweenJsonObjects = (firstJson, secondJson) => {
 };
 
 const getDiffBetweenFiles = (filepath1, filepath2) => {
-  const firstFileContent = fs.readFileSync(filepath1);
-  const secondFileContent = fs.readFileSync(filepath2);
-
-  let firstJson;
-  let secondJson;
-
-  const firstExtension = getExt(filepath1);
-  if (firstExtension === '.json') {
-    firstJson = JSON.parse(firstFileContent);
-  } else if (firstExtension === '.yaml') {
-    firstJson = yaml.safeLoad(firstFileContent);
-  } else {
-    throw new Error('unexpected extension of file1');
-  }
-
-  const secondExtension = getExt(filepath2);
-  if (secondExtension === '.json') {
-    secondJson = JSON.parse(secondFileContent);
-  } else if (secondExtension === '.yaml') {
-    secondJson = yaml.safeLoad(secondFileContent);
-  } else {
-    throw new Error('unexpected extension of file2');
-  }
+  const firstJson = new Parser(filepath1).getContentAsJson();
+  const secondJson = new Parser(filepath2).getContentAsJson();
 
   return getDiffBetweenJsonObjects(firstJson, secondJson);
 };

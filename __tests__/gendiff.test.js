@@ -1,6 +1,6 @@
 /* eslint-disable jest/no-disabled-tests */
 import { fileURLToPath } from 'url';
-import genDiff, { getDiffBetweenJsonObjects, getExt } from '../src/gendiff';
+import genDiff, { getDiffBetweenJsonObjects } from '../src/gendiff';
 
 const getAbsolutePath = (filepath) => fileURLToPath(new URL(filepath, import.meta.url));
 
@@ -119,21 +119,6 @@ describe('gendiff', () => {
   + key: false
 }`,
       );
-    });
-  });
-
-  describe('sub function', () => {
-    it('getExt returns yaml extension', () => {
-      const filepath = './folder/file.yaml';
-      expect(getExt(filepath)).toBe('.yaml');
-    });
-    it('getExt returns json extension', () => {
-      const filepath = './folder/file.json';
-      expect(getExt(filepath)).toBe('.json');
-    });
-    it('getExt returns json as default', () => {
-      const filepath = './folder/file';
-      expect(getExt(filepath)).toBe('.json');
     });
   });
 });
