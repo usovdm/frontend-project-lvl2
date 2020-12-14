@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Parser from './Parser';
+import Parser from './Parser.js';
 
 const convertDiffToString = (diffObject) => {
   const result = [];

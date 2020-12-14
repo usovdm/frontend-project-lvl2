@@ -6,4 +6,5 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/62203607f09db1f5635b/maintainability)](https://codeclimate.com/github/usovdm/frontend-project-lvl2/maintainability)
 
 ### Examples in Asciinemas
-https://asciinema.org/a/378163
+- [JSON](https://asciinema.org/a/378163)
+- [YAML and without extension](https://asciinema.org/a/379039)
